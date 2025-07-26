@@ -57,14 +57,13 @@ for page in range(1, total_page+1):
         p_text = p_tag.text
         title_text = title_tag.text.strip()
 
-        if '½' in title_text:
+        search_days = re.search(r'(\d+)\s*-\s*Day', title_text)
+        if search_days != None:
+            Tour_days = int(search_days.group(1))
+        elif '½' in title_text:
             Tour_days = 1
         else:
-            num = re.findall(r'\d+(?=-Day)', title_text)
-            if len(num) > 0:
-                Tour_days = int(num[0])
-            else:
-                Tour_days = None
+            Tour_days = None
 
         temp = {
         'Tour_ID':item_tag.attrs['data-id'],
